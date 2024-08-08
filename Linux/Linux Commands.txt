@@ -1,0 +1,354 @@
+Linux basic commands
+====================
+
+# pwd 						--> Affiche le répertoir actuel
+
+# ls  						--> Affiche le contenu d'un répertoir
+
+# ls -lt					--> Affiche le contenu d'un répertoir par date de modification
+
+# ls -ltr					--> Affiche le contenu du plus ancien au plus nouveau
+
+# cd (change directory) 			--> Changer de répertoir
+
+# mkdir [Nom_répertoir1] [Nom_répertoir2] 	--> créer plusieurs répertoirs
+
+# mkdir -p [rep_parent]/[rep_fils]		--> crée le répertoir parent et fils
+
+# pushd [reprtoir]				--> avancer dans les répertoir en forme de pil
+
+# popd [repertoir]				--> reculer dans les répertoir en forme de pil
+
+# cp [rep_src] [rep_dest]			--> copier un répertoir ou un fichier
+
+# cat [fichier]					--> lire le contenu d'un fichier
+
+# cat > [fichier] 				--> afficher la sortie dans un fichier
+
+# more fichier.txt				--> affiche le contenu d'un fichier en une page
+
+# less fichier.txt				--> permet d'affichier le contenu d'un fichier et d'y naviguer
+
+
+Utilisation de l'aide
+=====================
+
+# whatis [commande]				--> permet de donner la description d'une commande
+
+# man [commande]				--> donne une documentation détaillé d'une commande avec les cas d'utilisaion
+
+# [commande] --help				--> permet de lister les options et les cas d'utilisation
+
+# apropos [mot_clé]				--> permet de voir toutes les commande contenant certain mots clés
+
+
+SHELL
+=====
+
+# echo $SHELL 						--> pour voir le chell actuel
+
+# chsh							--> pour changer le shell
+
+# alias dt=date						--> créer un alias
+
+# history						--> visiter les commandes précédentes
+
+$SHELL 							--> c'est une variable d'environnement
+
+# env							--> pour affichier toutes tes variables d'environnement
+
+# export PROJECT=MERCURY				--> permet de créer une variable d'environnement
+
+# echo 'export PROJECT=MERCURY' >> /home/bob/.profile	--> Permet de rendre persistante la variable d'environnement
+
+$PATH							--> chemin d'environnement
+
+# which obs-studio					--> permet de trouver le chemin du programme
+
+# export PATH=$PATH:/opt/obs/bin			--> permet d'ajouter le chemin d'un programme au chemin d'environnement
+
+# PS1							--> permet de customister le prompt
+
+# PS1='[\d]\u@\h:\w$'					--> pour mettre le prompt ss forme de : [Wed Apr 22]bob@caleston-lp10:~$
+
+
+HARWARE
+=======
+# uname -r 					--> info du kernel
+
+# dmesg(display message)			--> permet d'afficher les messages du noyau du système
+
+# dmesg | grep - usb				--> permet d'afficher les infos de la clé USB
+
+# udevadm monitor				--> affiche les évènements udev
+
+# lspci						--> affiche les information sur les équipements pci (perfiferal interconect component)
+
+# lsblk						--> affiche les information des équipements en blocs 
+
+# lscpu						--> donne les infos sur l'architecture du cpu
+
+# lsmem	--summary				--> affiche l'espace mémoire disponible
+
+# free -m					--> affiche l'espace de la mémoire
+
+# lshw 						--> affiche toutes les informations du hardware
+
+
+Runlevels
+=========
+
+# runlevel					--> pour voir le mode d'opération. 5 pr le mode graphique et 3 pour le mode non graphique
+
+# systemctl set-default multi-user.target	--> permet de changer le runlevel sur le mode non-graphique (multi-user)
+
+
+Gestion de packets
+==================
+
+Debian
+------
+
+I - DPKG -- N'installe pas de dépendances [source local]
+
+# dpkg -i telenet.deb				--> installation / mise à jour
+
+# dpkg -r telnet.deb				--> désinstaller
+
+# dpkg -l telnet				--> lister
+
+# dpkg -s telnet				--> status
+
+# dpkg -p [chemin_fichier]			--> pour vérifier un paquet 
+
+
+II - APT (Advance package manager) [source local/remote]
+
+# APT donne des résultats plus conviviales que le APT-GET
+
+# sudo apt install [Nom_App] 			--> Pour installer une application
+
+# sudo apt remove [Nom_App]  			--> Pour supprimer une application
+
+# sudo apt list -- installed 			--> Pour lister les applications installé
+
+# sudo apt list | grep telnet 			--> pour lister une application spécifique
+
+# sudo apt upgrade				--> mettre à jour un paquet
+
+# apt edit-sources				--> trouver les sources
+
+# apt search telnet				--> pour trouver un paquet
+
+
+REDHAT
+------
+
+I- RPM (RedHat packet manager)  [source local] -- N'installe pas de dépendances
+
+# rpm -ivh					--> installer un paquet rpm
+
+# rpm -e telnet.rpm				--> désinstaller un paquer rpm
+
+# rpm -Uvh telnet.rpm				--> mettre à jour un paquet
+
+# rpm -q telnet.rpm				--> intérroge un paquet
+
+# rpm -Vf [chemin_fichier]			--> pour vérifier un paquet rpm 
+
+
+II- YUM (YellowDog Updater Modify) [source local/remote] -- installe les dépendances contrairement à RPM
+
+# yum install httpd				--> installer un paquet avec yum
+
+# yum remove httpd				--> supprimer un paquet
+
+# yum update					--> pour mettre à jour un paquet
+
+# yum repolist					--> 
+
+# yum provides tcpdump				--> pour voir le paquet qui fournit une applicaion donnée
+
+
+Fichier
+=======
+
+# du -sh test.img				--> pour voir la taille d'un fichier
+
+# ls -lh					--> pour voir la taille d'un fichier
+
+archivage
+---------
+
+# tar cf test.tar fichier1 fichier2		--> pour créer une archive
+
+# tar tf test.tar				--> pour voir le contenu
+
+# tar xf test.tar				--> pour extraire le contenu
+
+# tar zcf test.tar fichier1 fichier2		--> pour archiver et compresser
+
+
+compression					Decompression
+-----------					-------------
+
+# bzip2 test.img				# bunzip2 test.img.bz2
+
+# gzip test.img					# gunzip test1.img.gz
+
+# xz test2.img					# unxz test2.img.xz
+
+# zcat # bzcat # xzcat				--> permet de manipuler les fichiers compressés sans les décompresser
+
+# zcat hostfile.txt.bz2				--> manipuler le fichier compressé sans le décompresser
+
+
+Recherche de fichiers ou répertoires
+------------------------------------
+
+# locate City.txt				--> chercher un fichier situé dans le système : si ça ne donne pas de résultat utiliser updatedb et recommencer
+
+# updatedb					--> pour mettre à jour le chemin des fichiers dans la BD
+
+# find [chemin_rep] -name City.txt		--> chercher un fichier ou repertoir dans un répertoir
+
+# find [chemin_rep] -size +10ckMG			--> chercher un fichier en fonction de la taille. c pr octet, k kilobit, M megabite
+
+# find [chemin_rep] -mmin (-1)(1)(+1)		--> chercher un fichier en fonction du temps de la modification. (-1) pour les dernier 1 minute, (1) pour l'intervalle d'une minute et (+1) pr avant les 1min
+
+# find [chemin_rep] -perm (664, -664, /664)	--> rechercher un fichier avec des permissions. 664 (exatement) -664 (au moin) /664 (avc une des permission)
+
+# grep [nom_cherché] [fichier_cible]		--> rechercher un mot dans un fichier
+
+# grep -i [nom_cherché] [fichier_cible]		--> -i est ajouté pour éviter la sensibilité à la cast
+
+# grep -r "third line" /home/michael		--> fait une recherche récurcive : utile quand on ne connait pas le nom du fichier exact ; il montre le fichier cible et le mot recherché
+
+# grep -v "printed" sample.txt			--> affiche les éléments qui ne contiennent pas le mot clé
+
+# grep -w "printed" sample.txt			--> affiche uniquement les lignes qui contiennent exactement le mot clé
+
+
+IO Redirection
+--------------
+
++ Stdin	- stdout - stderr			--> les d'entrée et sortie
+
+# echo $SHELL > shell.txt			--> permet d'enrégistrer la sortie dans un fichier en écrasant le texte existant dans le fichier
+
+# echo $SHELL >> shell.txt			--> permet d'enrégistrer la sortie dans un fichier à la suite d'un texte existant
+
+# cat [nom_fichier] 2> error.txt		--> permet d'enrégistrer la sortie d'erreur dans un fichier en écrasant le texte existant dans le fichier
+
+# cat [nom_fichier] 2>> error.txt		--> permet d'enrégistrer la sortie d'erreur dans un fichier à la suite d'un texte existant
+
+# commande1 | commande2				--> avec le pipe, la sortie de la première commande devient l'entrée de la seconde
+
+# echo $SHELL | tee shell.txt			--> cette commande permet d'enrégistrer la sortie dans un fichier tout en l'affichant dans le terminal
+
+# echo “This is the bash” | tee -a shell.txt	--> cette commande permet d'enrégistrer la sortie à la suite d'un texte dans un fichier tout en l'affichant dans le terminal
+
+VI - VIM
+--------
+
+# update-alternatives --display editor		--> pour voir l'éditeur par défauft
+
+# yy						--> copier une ligne en mode commande
+
+# p 						--> coller une ligne en mode commande
+
+# zz						--> pour enrégistrer un fichier
+
+# dd						--> supprimer une ligne en mode commande
+
+# d3d						--> pour supprimer les 3 première ligne. on peut remplacer le 3 par n'importe quel chiffre 
+
+# u 						--> pour fair un retour du genre ctrl+z
+
+# Ctrl+r					--> pour aller en avant du genre ctrl+y
+
+:w						--> pour enrégistrer
+
+:q						--> pour quitter
+
+:wq						--> enrégistrer et quitter
+
+:q!						--> quitter sans enrégistrer de changement
+
+
+SSL Certificates
+================
+
+# openssl req -newkey rsa:2048 -keyout key.pem -out req.pem	--> Génère une clé privé & lui crée une requette de certificat
+
+# openssl req -x509 -noenc -newkey rsa:4096 -days 365 -keyout myprivate.key -out mycertificate.crt	--> Génère un certificat auto signé
+
+# openssl x509 -in mycertificate.crt -text	--> affiche le certificat en forme textuel
+
+GIT
+===
+
+Première config
+---------------
+
+# git config --global user.name "Olivier"
+# git config --global user.mail "botcholi@gmail.com"
+
+# git status			--> il nous montre les modifications opérées
+
+# git add *
+
+OPERATION DEPLOYEMENT
+=====================
+
+Boot & Reboot
+-------------
+
+# sudo systemctl reboot		--> Permet de redémarrer la machine
+
+# sudo systemctl poweroff	--> Permet d'arrêter la machine
+
+# sudo systemctl reboot/poweroff (--force ou x2) --> cela permet de forcer l'arrêt ou le redémarrage. x2, c'est de manière plus drastique
+
+# sudo shutdown [hh:mm]		--> Elle permet d'arrêter la machine à une heure donnée 
+
+# sudo shutdown -r [hh:mm]	--> Elle permet de redémarrer la machine à une heure donnée
+
+# sudo shutdown +15 		--> permet d'arrêter la mahine après un temps donné. Ici c'est 15min
+
+# sudo shutdown -r +15 		--> permet de redémarrer la mahine après un temps donné. Ici c'est 15min
+
+
+Boot or change system into different operating modes
+----------------------------------------------------
+
+# systemctl get-default		--> Nous donne des informations sur l'interface actuel de l'OS
+
+# sudo systemctl set-default multi-user.target	--> Permet de passer de l'interface graphique à l'interface sans GUI comme interface par défaut
+
+# sudo systemctl set-default graphical.target	---> Permet de passer de l'interface sans GUI à l'interface avec GUI
+
+# sudo systemct isolate graphical.target 	--> Permet de passer directement de l'interface sans GUI à l'interface graphique
+
+# sudo systemctl isolate emergency.target	--> passer en mode urgence
+
+# sudo systemctl isolate rescue.target 		--> Passer en mode secours
+
+
+Bootloader
+----------
+
+Le bootloader est un programme qui permet de lancer le Kernel. 
+
+GRUB (Grand Unified Bootloader) est le plus utilisé
+
+
+
+
+
+
+
+
+
+
+
