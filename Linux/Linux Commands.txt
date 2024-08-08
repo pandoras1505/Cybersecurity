@@ -29,6 +29,7 @@ Linux basic commands
 
 # less fichier.txt				--> permet d'affichier le contenu d'un fichier et d'y naviguer
 
+# wc						--> permet de compter les lignes
 
 Utilisation de l'aide
 =====================
@@ -41,6 +42,7 @@ Utilisation de l'aide
 
 # apropos [mot_clé]				--> permet de voir toutes les commande contenant certain mots clés
 
+# which [commande]				--> permet de retrouver le chemin complet des fichier d'une commande 
 
 SHELL
 =====
@@ -52,6 +54,8 @@ SHELL
 # alias dt=date						--> créer un alias
 
 # history						--> visiter les commandes précédentes
+
+# ![num history]					--> permet d'exécuter une commande précédente avec son numéro 
 
 $SHELL 							--> c'est une variable d'environnement
 
@@ -128,7 +132,9 @@ II - APT (Advance package manager) [source local/remote]
 
 # sudo apt install [Nom_App] 			--> Pour installer une application
 
-# sudo apt remove [Nom_App]  			--> Pour supprimer une application
+# sudo apt remove [Nom_App]  			--> Pour supprimer un paquet
+
+# sudo apt autoremove [nom_app]			--> pour supprimer un paquet et ses sépendances
 
 # sudo apt list -- installed 			--> Pour lister les applications installé
 
@@ -139,6 +145,29 @@ II - APT (Advance package manager) [source local/remote]
 # apt edit-sources				--> trouver les sources
 
 # apt search telnet				--> pour trouver un paquet
+
+# sudo vim /etc/apt/sources.list		--> affiche le dépôt par défaut du système
+
+-----------------------------------------------------------
+Exemple : installation d'un paquet venant d'une autre source
+-----------------------------------------------------------
+
+# curl "https://download.docker.com/linux/ubuntu/gpg" -o docker.key	--> Télécherge la clé de sécurité
+
+# gpg -dearmor docker.key			--> transforme la clé du format text en format binaire pour que ce soit compréhensible par le gestionnaire de paquet un nouveau fichier sera crée qui aura pour extension gpg
+
+# sudo mv docker.key.gpg /etc/apt/keyrings/
+
+# sudo /etc/apt					--> pour voir les fichier de configuration
+
+# sudo vi /etc/apt/sources.list.d/docker.list	--> création des fichiers de configurations de docker
+
+# Edité le fichier
+	
+	- deb [signed-by=/etc/apt/keyrings/docker.key.gpg]https://download.docker.com/linux/ubuntu jammy stable	--> le lien représente le lien où se trouve le dépôt
+
+# sudo apt update				--> met à jour la base de donnée du dépôt
+
 
 
 REDHAT
@@ -180,14 +209,15 @@ Fichier
 archivage
 ---------
 
-# tar cf test.tar fichier1 fichier2		--> pour créer une archive
+# tar cfP test.tar fichier1 fichier2		--> pour créer une archive
 
 # tar tf test.tar				--> pour voir le contenu
 
-# tar xf test.tar				--> pour extraire le contenu
+# tar xf test.tar -C /[chemin]				--> pour extraire le contenu
 
-# tar zcf test.tar fichier1 fichier2		--> pour archiver et compresser
+# tar -zcf test.tar fichier1 fichier2		--> pour archiver et compresser
 
+# unzip test.zip -d /[chemin]
 
 compression					Decompression
 -----------					-------------
@@ -211,12 +241,6 @@ Recherche de fichiers ou répertoires
 # updatedb					--> pour mettre à jour le chemin des fichiers dans la BD
 
 # find [chemin_rep] -name City.txt		--> chercher un fichier ou repertoir dans un répertoir
-
-# find [chemin_rep] -size +10ckMG			--> chercher un fichier en fonction de la taille. c pr octet, k kilobit, M megabite
-
-# find [chemin_rep] -mmin (-1)(1)(+1)		--> chercher un fichier en fonction du temps de la modification. (-1) pour les dernier 1 minute, (1) pour l'intervalle d'une minute et (+1) pr avant les 1min
-
-# find [chemin_rep] -perm (664, -664, /664)	--> rechercher un fichier avec des permissions. 664 (exatement) -664 (au moin) /664 (avc une des permission)
 
 # grep [nom_cherché] [fichier_cible]		--> rechercher un mot dans un fichier
 
@@ -242,11 +266,14 @@ IO Redirection
 
 # cat [nom_fichier] 2>> error.txt		--> permet d'enrégistrer la sortie d'erreur dans un fichier à la suite d'un texte existant
 
+# sudo [commande] > /home/bob/fscheck 2>&1	--> permet d'enrégistrer la sortie et les erreurs au même endroit
+
 # commande1 | commande2				--> avec le pipe, la sortie de la première commande devient l'entrée de la seconde
 
 # echo $SHELL | tee shell.txt			--> cette commande permet d'enrégistrer la sortie dans un fichier tout en l'affichant dans le terminal
 
 # echo “This is the bash” | tee -a shell.txt	--> cette commande permet d'enrégistrer la sortie à la suite d'un texte dans un fichier tout en l'affichant dans le terminal
+
 
 VI - VIM
 --------
@@ -265,6 +292,8 @@ VI - VIM
 
 # u 						--> pour fair un retour du genre ctrl+z
 
+# G 						--> permet d'aller à la dernière ligne
+
 # Ctrl+r					--> pour aller en avant du genre ctrl+y
 
 :w						--> pour enrégistrer
@@ -276,71 +305,482 @@ VI - VIM
 :q!						--> quitter sans enrégistrer de changement
 
 
-SSL Certificates
-================
 
-# openssl req -newkey rsa:2048 -keyout key.pem -out req.pem	--> Génère une clé privé & lui crée une requette de certificat
-
-# openssl req -x509 -noenc -newkey rsa:4096 -days 365 -keyout myprivate.key -out mycertificate.crt	--> Génère un certificat auto signé
-
-# openssl x509 -in mycertificate.crt -text	--> affiche le certificat en forme textuel
-
-GIT
-===
-
-Première config
----------------
-
-# git config --global user.name "Olivier"
-# git config --global user.mail "botcholi@gmail.com"
-
-# git status			--> il nous montre les modifications opérées
-
-# git add *
-
-OPERATION DEPLOYEMENT
+=====================
+Operation Deployement
 =====================
 
-Boot & Reboot
--------------
 
-# sudo systemctl reboot		--> Permet de redémarrer la machine
+Diagnostiquer et gérer les processus
+------------------------------------
 
-# sudo systemctl poweroff	--> Permet d'arrêter la machine
+# ps 				--> surveiller les processus 
 
-# sudo systemctl reboot/poweroff (--force ou x2) --> cela permet de forcer l'arrêt ou le redémarrage. x2, c'est de manière plus drastique
+# ps aux 			--> montre tous les processus
 
-# sudo shutdown [hh:mm]		--> Elle permet d'arrêter la machine à une heure donnée 
+# ps fax			--> montre les relations entre les processus 
 
-# sudo shutdown -r [hh:mm]	--> Elle permet de redémarrer la machine à une heure donnée
+# ps lax			--> affiche les processus du dernier au plus ancien
 
-# sudo shutdown +15 		--> permet d'arrêter la mahine après un temps donné. Ici c'est 15min
+# top 				--> montre les processus les plus utilisé
 
-# sudo shutdown -r +15 		--> permet de redémarrer la mahine après un temps donné. Ici c'est 15min
+# ps [pid]			--> donne les infos sur un processu
+
+# ps u [pid] 			--> donne les info sur l'utilisation des ressources par un processus
+
+# ps -U [nom_user]		--> montre tous les processus d'un utilisateur donné
+
+# pgrep -a syslog		--> fait ressortir tous les processus contenant un nom donné. Ici c'est syslog
+ 
+# kill -L			--> nous donne une liste numérique des signaux
+
+# kill -SIGNUP [pid]		--> permet de tuer un processus donné
+
+# kill [pid]			--> permet d'arrêter normalement le processus
+
+# pkill [nom_programme]		--> permet d'arrêter un programme
+
+# kill -KILL 			--> permet de forcer l'arrêt immédiat d'un processus
+
+# ctrl+z 			--> permet de mettre un processus en backgroung
+
+# fg 				--> qui veut dire forground pour ramener le processus qui étais en background
+
+# jobs				--> affiche les processus en background
+
+# [commande] + &		--> permet d'exécuter des commande en background
+
+# renice [numéro] [pid]		--> permet d'affecter une nouvelle priorité à un processus 
+
+# lsof -p [pid] 		--> permet d'afficher les fichiers ouverts par un processus
+
+# nice -n [numéro] [nom_precess]	--> permet d'assigner une priorité à un processus
+
+Locate and analyze system logs
+------------------------------
+
+# /var/log 			--> c'est le répertoire où se trouve les logs en linux
+
+# grep -r 'ssh' /var/log	--> permet de trouver le chemin où sont stoqués les logs du ssh
+
+# /var/log/secure		--> c'est le chemin qui mène vers les logs du sshd et des logs de sécurité
+
+# tail -F /var/log/secure	--> pour voir le contenu du fichier lo
+
+# journalctl [Commande]		--> permet de montrer les logs générés par une commande donné par exemple /bin/basg=sudo
+
+# journactl -u sshd.service	--> permet de générer les logs d'un service donné. ici c'est le sshd
+
+# journactl			--> permet d'afficher tous les logs
+
+# journalctl -e 		--> permet d'afficher les derniers logs
+
+# journalctl -f 		--> permmet d'afficher les logs en follow mode
+
+# Types de logs
+
+	- info
+	- warning
+	- err
+	- crit
+
+# journalctl -p err				--> permet d'afficher les logs en fonction de leurs criticité
+
+# journalctl -p + tab tab			--> permet de lister les criticité disponible
+
+# journalctl -S 02:00 				--> permet de généré les logs d'une certaine heure 
+
+# journalctl -S 02:00 -U 02:00 			--> permet de générer les logs d'un intervalle de de temps donné
+
+# journalctl -S '2021-11-16 12:04:55'		--> permet de générer les logs d'une date précise
+
+# journalctl -b 0				--> affiche les logs du boot actuel
+
+# last						--> permet de voir les utilisateurs qui se sont authentifiés 
+
+# lastlog					--> permet d'avoir des informations sur les utilisateurs récemment authentifié
+
+# journalctl -p err -g '^c'			--> permet de filtrer un mot donné dans les logs
 
 
-Boot or change system into different operating modes
-----------------------------------------------------
+Schedule tasks to run at a set date and time
+--------------------------------------------
 
-# systemctl get-default		--> Nous donne des informations sur l'interface actuel de l'OS
+Crontab
+-------
 
-# sudo systemctl set-default multi-user.target	--> Permet de passer de l'interface graphique à l'interface sans GUI comme interface par défaut
+[min] [hour] [day of month] [month(1-12) ou jan,fev,mar...] [day of week (0-6) ou sun,mon,tue...] [user-name] [command]
 
-# sudo systemctl set-default graphical.target	---> Permet de passer de l'interface sans GUI à l'interface avec GUI
+# cat /etc/crontab				--> le répertoir de crontab
 
-# sudo systemct isolate graphical.target 	--> Permet de passer directement de l'interface sans GUI à l'interface graphique
+# crontab -e					--> édité une tache
 
-# sudo systemctl isolate emergency.target	--> passer en mode urgence
+# crontab -r 					--> supprimer tout les jobs
 
-# sudo systemctl isolate rescue.target 		--> Passer en mode secours
+# sudo crontab -r -u [username]			--> permet de suprimer les jobs d'un utilisateur donné
+
+# sudo crontab -e -u [username]			--> permet d'éditer les jobs d'un utilisateur donné	
+
+Crée un fichier le Lundi 3 juin à 9h15 = 15 9 3 6 1 /usr/bin/touch test passed
+
+Crée un fichier tous les jours à 9h15 = 15 9 * * * /usr/bin/touch test passed
+
+# crontab -l 					--> permet de voir toutes les tâches prévus par un utilisateur donné
+
+# sudo crontab -l				--> permet de voir toutes les tâches prévus par l'utilisateur root
+
+Il est possible de plannfier des jobs en copiant par exemple un script dans des fichiers données
+
+	- daily = /etc/cron.daily/
+
+	- hourly = /etc/cron.hourly/
+
+	- monthly = /etc/cron.monthly/
+
+	- weekly = /etc/cron.weekly
+
+Si on veut exécuter un fichier par heure, on procède comme suit
+
+# touch shellscript
+
+# sudo cp shellscript /etc/cron.hourly/
+
+# sudo chmod +rx /etc/cron.hourly/shellscript
+
+# sudo rm /etc/cron.hourly/shellscript		--> pour annuler le job
 
 
-Bootloader
-----------
+Anacron
+-------
 
-Le bootloader est un programme qui permet de lancer le Kernel. 
+# sudo vim /etc/anacron 			--> permet de programmer des jobs avec anacron
 
-GRUB (Grand Unified Bootloader) est le plus utilisé
+Dans un délai de 3 jours, chaque 10 min crée un fichier nommé anacron_reated_this dans /root/ = 3 10 test_job /usr/bin/touch /root/anacron_created_this
+
+# anacron -T 					--> permet de tester si le job aété bien programmé 
+
+at
+__
+
+permet d'exécuter un job une seule fois à une date donnée
+
+# at 'now + 1 minute'
+
+at > echo "my at job produced this output"
+
+at > ctr + d
+
+
+Verify completion of scheduled jobs
+------------------------------------
+
+# sudo cat /var/log/cron			--> permet de voir tous les jobs exécutés
+
+# sudo grep CMD /var/log/cron			--> permet de voir toutes les commandes exécutées contenant la suntaxe CMD
+
+# crontab -n -f 				--> permet de forcer la réexécution des jobs précédents
+
+# atq						--> permet de recenser tous les job crées à traves la commande at
+
+# atrm [jobid]					--> supprimer un job crée à travers at
+
+vérifier l'intégrité et la disponibilité des ressources
+-------------------------------------------------------
+# du -sh test.img				--> pour voir la taille d'un fichier
+
+# ls -lh					--> pour voir la taille d'un fichier
+
+# df -h (disk free)				--> permet de voir la disponibilité du disque
+
+# free -h 					--> pour voir la disponibilité de la RAM
+
+# uptime					--> pour voir depuis quand le processeur est utilisé
+
+Intégrité du système de fichier
+-------------------------------
+
+# sudo xfs_repair -v [partition] 		--> permet de vérifier le système de fichier xfs. exemple /dev/vdb1
+
+# sudo fsck.ext4 -v -f -p [partition] 		--> permet de vérifier le système de fichier ext4. exemple /dev/vdb1
+
+# systemctl list-dependencies			--> permet de voir l'état des services
+
+
+Changement des paramètres Runtime
+---------------------------------
+Les requêtes runtime du noyaux sont des paramètre interne du noyaux qui assure sont fonctionnement. Exemple : gestion de la distribution de la mémoire, gestion du réseau
+
+# sudo sysctl -a 					--> affiche tous les paramètres runtime en cours d'utilisation
+
+# sudo sysctl -w [runtime]=1 ou 0 			--> permet de modifier le runtime. la valeur 0 signifie desable et 1 enable (il n'y a pas d'espace entre le runtime et la valeur)
+
+
+SELinux
+-------
+
+# ls -Z [reoertoir]					--> permet de voir le label SElinux d'un répertoir
+
+# ps -auxZ | grep sshd					--> permet de voir le label SElinux d'un processus
+
+
+=======================
+UTILISATEURS ET GROUPES
+=======================
+
+Create, delete, and modify local user accounts
+----------------------------------------------
+
+# sudo useradd john					--> créer un nouvel utilisateur
+
+# sudo passwd john					--> assigner un mot de passe à un utilisateur
+
+# sudo userdel john					--> supprimer un utilisateur. /home/john ne sera pas supprimé
+
+# sudo userdel -r john					--> supprime l'utilisateur et le home directory
+
+# sudo groupdel john					--> permet de supprimer un group
+
+# cat /etc/passwd					--> donne les infos sur les utilisateurs
+
+# sudo useradd -u 1100 john				--> permet d'ajouter un utilisateur en imposant un uid
+
+# whoami						--> permet de voir en tant quel utilisisateur on est connecté
+
+# id 							--> permet de voir l'id de l'utilisateur avec lequel on est connecté
+
+# sudo useradd --system sysacc				--> permet de créer un compte system. la particularité c'est qu'il n'y aura pas de home directory
+
+# sudo usermod --home [new repository] --move-home john	--> permet de changer le home directory d'un utilisateur
+
+# sudo usermod --login [new name] [old name]		--> permet de changer le nom d'utilisateur
+
+# sudo usermod --lock jane				--> bloque un utilisateur
+
+# sudo usermod --unlock jane				--> débloque un utilisateur bloqué
+
+# sudo usermod -e "" jane				--> permet de mettre un compte sur n'expire jamais
+
+# sudo usermod --expiredate 2024-12-31 jane		--> permet d'assigner une période de validité d'un compte
+
+# sudo chage --lastday 0 jane				--> permet de faire expirer immédiatement un mot de passe (chage = change age)
+
+# sudo -a /etc/skel		
+
+# useradd --defaults					--> affiche les paramètres par défaut lors de la création d'un nouvel utilisateur
+
+
+Create, delete, and modify local groups and group memberships
+-------------------------------------------------------------
+
+# sudo gpasswd --add john developers			--> permet d'ajouter un utilisateur à un group
+
+# groups john						--> permet de voir les groups auquel appartient l'utilisateur john
+
+# sudo gpasswd --delete john developers			--> permet de supprimer un utilisateur d'un group
+
+# sudo usermod -g developers john			--> permet de changer le group primaire d'un utilisateur
+
+# sudo groupmod --new-name programmers developers	--> permet de changer le nom du group developers en programmers
+
+
+Manage user privileges
+----------------------
+
+# visudo						--> permet d'éditer les sudoers
+
+Exemple :
+
+Group		Users				commands
+trinity		ALL=(mamadou,bineta)		ALL
+
+
+# sudo -u trinity ls /home/trinity			--> exécuter une command en tant qu'un autre utilisateur
+
+
+Configure the system to use LDAP user and group accounts
+--------------------------------------------------------
+
+TP à faire
+
+
+==========
+NETWORKING
+==========
+
+Configure IPv4 and IPv6 networking and hostname resolution
+----------------------------------------------------------
+
+# ip link						--> affiche les interface réseau
+
+# ip a 							--> affiche les ip des interfaces
+
+# ip -c add						--> permet de colorer les address ip et mac
+
+# sudo ip link set dev enp0s8 up 			--> permet de mettre up une interface
+
+# sudo ip address add 192.168.5.55/24 dev enp0s8	--> permet d'assigner une addresse ip à une interface
+
+# sudo ip address delete 192.168.5.55/24 dev enp0s8	--> permet de supprimer une addresse ip à une interface
+
+# netplan get						--> nous donne les information sur la configuration réseau
+
+# /etc/netplan/						--> chemin vers le fichier de configuration de netplan
+
+--------------------------------------------------------------------
+Exemple : Assigner une adresse
+
+
+# sudo vi /etc/netplan/00-installer-config.yaml
+
+	network :
+		ethernets:
+			enp0s3 :
+				dhcp4 : fals
+				dhcp6 : false
+				addresses :
+					- 10.0.0.9/24
+					- aa:bb:cc:dd:aa:cc:dddd
+
+			version : 2
+
+
+# sudo netplan apply					--> pour enrégistrer
+
+# sudo netplan try					--> pour annuler la configuration
+
+# sudo netplan try --timeout 30				--> pour annuler la configuration si l'on n'appuie pas sur entrer dans les temps défini
+
+# sudo vi /etc/netplan/99-installer-config.yaml		--> on crée se fichier pour configurer une nouvelle interface
+
+
+network:
+		ethernets:
+			enp0s8:
+				dhcp4: fals
+				dhcp6: false
+				addresses:
+					- 10.0.0.9/24
+					- aa:bb:cc:dd:aa:cc:dddd
+				nameservers:
+					- 8.8.4.4
+					- 8.8.8.8
+				routes:
+					- to: 192.168.0.0/24
+					  via: 10.0.0.100
+					- to: default
+					  via: 10.0.0.1
+			version : 2
+
+# resolvectl status					--> voir le staut de la résolution dns
+
+# /etc/hosts						--> fichier de configuration du dns
+
+# /etc/systemd/resolved.conf				--> fichier de configuration du resolveur
+---------------------------------------------------------------------
+
+
+Start, stop, and check the status of network services
+-----------------------------------------------------
+
+Pour vérifier les connetion entrante on a 2 utilitaire :
+
+- ss : nouvelle version 
+- netstat : ancien version (bientôt supprimé) 
+
+# sudo ss -tunlp					--> vérifier les connection entrante
+
+# sudo netstat -tunlp					--> vérifier les connection entrante
+
+
+Configure bridge and bonding devices
+------------------------------------
+
+Bonding : permet de relier 2 carte réseau afin d'assurer une haute disponibilité. si une carte tombe, l'autre prend le relais. et ça augmente aussi la bande passante
+
+Bonding modes : mode 0 à 6
+
+mode 0 : round robin (à tour de rôle)
+mode 1 : active-backup (maintient une interface active et l'autre en backup au cas où)
+mode 2 : XOR 
+mode 3 : broadcast (transfère les données simultanément sur les 2 interfaces)
+mode 4 : IEEE 802.3ad 
+mode 5 : adaptive transmit load balancing (transfert les données à l'interface la moin occupée)
+mode 6 : adaptive load balancing (transfert les données entrantes sur une interface et les données sortantes sur l'autre)
+
+Bridge : le bridge permet de connecter 2 carte réseau afin qu'ils puissent communiquer
+
+--------------------------------------------------------------------
+Exemple : Configurer le bridgde et le bound
+
+# ls /usr/share/doc/netplan/exemples			--> permet de voir toutes les configuration du netplan possible
+
+# cat /usr/share
+
+
+
+=======================================================================================
+
+List, create, delete, and modify physical storage partitions
+------------------------------------------------------------
+
+# lsblk		--> affiche les partitions
+
+# sda, b etc		--> disque physique
+
+	- sdb1, 2 etc	--> partition du dusque	
+
+fdisk est un utilitaire de partitionnement pré-installé
+
+# fdisk --list /dev/sda	--> affiche les partition d'un bloque de disque
+
+cfdisk est un utilitaire plus facile à utiliser
+
+# sudo cfdisk /dev/sdb
+
+
+Configure and manage swap space
+-------------------------------
+
+# sudo swapon --show		--> montre l'espace du swap
+
+# sudo mkswap /dev/vdb3	--> créer un espace swap à travers une partition
+
+# sudo swapon --verbose /dev/vdb3
+
+# sudo swapoff /dev/vd3	--> ne plus utiliser cette partition comme swap
+
+
+Create and configure file systems
+---------------------------------
+
+XFS
+---
+
+# sudo mkfs.xfs /dev/sdb1		--> crée u système de fichier xfs
+
+# sudo mkfs.ext4 /dev/sdb1		-->crée un système de fichier ext4
+
+# sudo mkfs.xfs -i size=512 -L "BackupVolume" /dev/sdb1	--> créer un système de fichier en définissant le inode et le label
+
+# xfssudo xfs_admin -l /dev/sdb1	--> affiche le label
+
+# sudo xfs_admin -L "FirstFS" /dev/sdb1	--> changer le label d'un volume
+
+
+EFS
+---
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
