@@ -1,0 +1,30 @@
+Liens importants
+
+https://github.com/The-Art-of-Hacking/h4cker/tree/master/bug-bounties
+
+_________________________
+
+PASSASSIVE RECONNAISSANCE
+_________________________
+
+OSINT Tools
+-----------
+
++ OSINT Framework				--> https://osintframework.com/
+
++ SpiderFoot					--> C'est un scanner OSINT qui est intégré à kali	 
+	
+	- spiderfoot -l 127.0.0.1:5001			--> Pour lancer le spiderfoot
+	- 127.0.0.1:5001				--> Dans le navigateur pour accéder au GUI
+	 
++ Recon-ng					--> C'est un Framework OSINT intégré dans Kali
+
+	- recon-ng				--> pour lancer le Framework
+	- workspaces create test			--> pour créer un Workplace
+	- marketplace search				--> pour voir les modules disponibles sur le marketplace
+	- marketplace install [Nom_module]		--> installer un module
+	- modules search				--> pour voir les modules disponibles sur la machine
+	- modules load [Nom_module]			--> pour lancer un module
+	- options set SOURCE [domaine_cible]		--> pour charger une cible
+	- run						--> pour lancer une recherche
+	- Dashboard					--> pour avoir un résumé
