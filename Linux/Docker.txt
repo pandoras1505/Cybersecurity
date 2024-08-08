@@ -1,0 +1,38 @@
+# docker pull [nom du container]				--> Permet de télécharger le container
+
+# docker images							--> permet de lister les container installer
+
+# docker ps							--> permet de lister les container en cour d'exécution
+
+# docker ps -a							--> permet de lister tous les container 
+
+# docker run -d [nom_container]					--> démarrer le container en background
+
+# docker exec -it [id_container]/[nom_container] bash		--> pour rentrer dans le container (accéder aux fichiers du container)
+
+# docker run -d -p 8080:80 [nom_image]				--> mapper un container à un port et y accéder à traver le navigateur
+
+# docker run -d -p 8080:80 --name [Nom] [nom_image]		--> mapper un container à un port et y accéder à traver le navigateur tout en lui assignant un nom
+
+# docker stop [id_container]					--> pour arrêter un container 
+
+# docker start [id_container]					--> pour démarrer un container
+
+# docker rm [id_container]					--> pour supprimer un container 
+
+# docker rmi [nom_image]					--> pour supprimer une image 
+
+# docker ps -aq							--> pour afficher juste les container id
+
+# docker rm $(docker ps -aq)					--> pour supprimer tou les containers
+
+# docker rename [old_name] [new_name]				--> renommer un container 
+
+=========================
+
+Création d'un environnement de développement
+--------------------------------------------
+
+# docker run -d -p 8081:80 --name website2 -v $(pwd):/website nginx	---> permet de lier les fichier d'un container à un fichier local (tout changement dans le fichier local sera répercuté dans le container
+
+# docker run -d -p 8081:80 --name website2 -v $(pwd):/usr/share/nginx/html nginx
