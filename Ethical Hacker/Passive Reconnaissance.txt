@@ -7,6 +7,7 @@ _________________________
 PASSASSIVE RECONNAISSANCE
 _________________________
 
+
 OSINT Tools
 -----------
 
@@ -16,8 +17,11 @@ OSINT Tools
 	
 	- spiderfoot -l 127.0.0.1:5001			--> Pour lancer le spiderfoot
 	- 127.0.0.1:5001				--> Dans le navigateur pour accéder au GUI
+	- New Scan > Scan Name & Target
+
++ Recon-web					--> C'est un Framework OSINT intégré dans Kali web
 	 
-+ Recon-ng					--> C'est un Framework OSINT intégré dans Kali
++ Recon-ng					--> C'est un Framework OSINT intégré dans Kali CMD
 
 	- recon-ng				--> pour lancer le Framework
 	- workspaces create test			--> pour créer un Workplace
@@ -25,6 +29,66 @@ OSINT Tools
 	- marketplace install [Nom_module]		--> installer un module
 	- modules search				--> pour voir les modules disponibles sur la machine
 	- modules load [Nom_module]			--> pour lancer un module
-	- options set SOURCE [domaine_cible]		--> pour charger une cible
+	- options set SOURCE [domaine_cible]		--> pour charger une cible on peut utiliser hackxor.net ou h4cker.org comme exemple 
 	- run						--> pour lancer une recherche
 	- Dashboard					--> pour avoir un résumé
+
+
+DNS Lookups
+-----------
+
+Le Scan DNS permet de trouver les adresses IP utilisé par un domaine ou les sous-domaine
+
+# dnsrecon -d [Domaine cible]				--> commande pour faire le DNS lookups. h4cker.org (domaine exemple)
+
+	Info obtenue : A h4cker.org 185.199.109.153
+
+# dig [Domaine cible] 					--> pour avoir plus d'informations sur le DNS
+
+
+# dig < domain > mx					--> pour avoir les informations du serveur mail 
+
+# nslookup
+	- [Domaine cible]
+	- set type=ns
+	- [Domaine cible]
+
+┌──(kali㉿Kali)-[~]										--> retourne assez d'information
+└─$ nslookup
+> server 8.8.8.8
+> set type=any
+> [Domaine cible]			
+
+
+Identification des contacts administratifs et techniques
+--------------------------------------------------------
+
+# whois [Domaine cible]					
+
+
+Cloud vs. Self-Hosted Applications and Related Subdomains
+---------------------------------------------------------
+
+# host [Domaine Cible]					--> permet de retrouver les ips qui résolvent le domaine cible
+
+# whois [Ip_répertoriré] | grep OrgName			--> pour trouver les propriétaire des ips
+
+
+Social Media Scraping
+---------------------
+
+Items to investigate include:
+
+1. All your social media profiles - name, birthdate, contact information, etc.
+2. Your status updates - life events, work relationships and status, political and religious beliefs.
+3. Location data - hometown information and geo check-ins.
+4. Shared content - pictures and comments you have posted and those where you are mentioned or tagged.
+5. Posts from friends and family.
+6. Any online discussions you have joined or participated in.
+
+Cryptographic Flaws
+-------------------
+
+
+
+
