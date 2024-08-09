@@ -32,7 +32,7 @@ OSINT Tools
 	- options set SOURCE [domaine_cible]		--> pour charger une cible on peut utiliser hackxor.net ou h4cker.org comme exemple 
 	- run						--> pour lancer une recherche
 	- Dashboard					--> pour avoir un résumé
-
+________________________________________________________________________________________________________________________________________________
 
 DNS Lookups
 -----------
@@ -59,6 +59,7 @@ Le Scan DNS permet de trouver les adresses IP utilisé par un domaine ou les sou
 > set type=any
 > [Domaine cible]			
 
+________________________________________________________________________________________________________________________________________________
 
 Identification des contacts administratifs et techniques
 --------------------------------------------------------
@@ -86,9 +87,66 @@ Items to investigate include:
 5. Posts from friends and family.
 6. Any online discussions you have joined or participated in.
 
-Cryptographic Flaws
--------------------
+________________________________________________________________________________________________________________________________________________
 
+Failles Cryptographiques
+------------------------
+L'étude des certificat permet de découvrir des failles dans les protocoles SSL/TLS utilisés
+Heartbleed est un exemple de faille cryptographique de Openssl
+
+- On peut accéder aux informations d'un certificat à travers le navigateur
+- Dans Windows, les certificats sont stockés dans certmgr.msc
+- Dans linux le chemin c'est : /usr/share/ca-certificates/mozilla
+- https://crt.sh/ permet d'avoir les détails sur les certificats d'un domaine
+
++ Use Kali Tools to Gather Certificate Information
+	# sudo apt install -y aha 				--> aha est un outil qui permet de mettre sous forme de html un standard output
+	# sslscan [Domaine_cible]
+	# sslscan skillsforall.com | aha > sfa_cert.html	--> exemple de redirection de la sortie avec aha
+
+________________________________________________________________________________________________________________________________________________
+
+Company Reputation and Security Posture
+---------------------------------------
+Les failles de sécurité peuvent avoir un impact direct sur la réputation d'une entreprise. Les attaquants peuvent exploiter des informations provenant de failles de sécurité antérieures qu'une organisation a pu subir. Ils peuvent, par exemple, exploiter les données suivantes lorsqu'ils tentent de recueillir des informations sur leurs victimes :
+	- Password dumps
+	- File metadata
+	- Strategic search engine analysis/enumeration
+	- Website archiving/caching
+	- Public source code repositories
+
++ Password Dumps
+
+	- h8mail permet de trouver les emails et passwords exposés dans des précédents brèches 
+		# pip3 install h8mail
+
+- Les sites suivantes permettent de récupérer des infos sur les précédentes brèches
+ 
+	- WhatBreach: https://github.com/Ekultek/WhatBreach
+	- LeakLooker: https://github.com/woj-ciech/LeakLooker
+	- Buster: https://github.com/sham00n/buster
+	- Scavenger: https://github.com/rndinfosecguy/Scavenger
+	- PwnDB: https://github.com/davidtavarez/pwndb
+
+- Les sites suivants permettent de vérifier si un mail a été compromis
+
+	- haveibeenpwned.com
+	- f-secure.com
+	- hacknotice.com
+	- breachdirectory.com
+	- keepersecurity.com
+
+- emailharvester 					--> permet de retrouver les emails d'un domaine
+
++ Les métadonnées des fichier
+
+	- ExifTool est l'un des outils les plus populaires 
+		# exiftool [nom_fichier]
+
+──(kali㉿Kali)-[~]
+└─$ exiftool -csv > /path/to/out.csv <File Or Dir>		--> permet d'enregistrer les métadonnées dans format csv
+
+________________________________________________________________________________________________________________________________________________
 
 
 
