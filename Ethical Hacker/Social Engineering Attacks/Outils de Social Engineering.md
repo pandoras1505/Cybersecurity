@@ -6,6 +6,7 @@ Le Social-Engineer Toolkit (SET) est un cadre open-source conçu pour effectuer 
 
 De base, Il est intégré à Kali Linux et Parot Security. Il est possible de le télécharger afiin de l’intégrer sur les distributions Linux et MacOs sur ce lien : https://github.com/trustedsec/social-engineer-toolkit 
 
+
 ## Browser Exploitation Framework (BeEF)
 
 Le Browser Exploitation Framework (BeEF) est un outil de sécurité avancé qui permet aux professionnels de la sécurité de tester et d'exploiter les vulnérabilités des navigateurs web. BeEF se concentre sur l'exploitation des navigateurs web pour permettre aux attaquants d'exécuter des commandes à distance sur les machines des utilisateurs ciblés via leur navigateur.
@@ -70,3 +71,15 @@ Une fois installé et démarré, BeEF est accessible via une interface web. Par 
 - Redirection de Pages : Permet de rediriger l'utilisateur vers une autre page web, potentiellement malveillante.
 
 - Prise de Captures d'Écran : Permet de prendre des captures d'écran de la session de navigation de l'utilisateur.
+
+
+## Call Spoofing Tools
+
+Vous pouvez très facilement modifier les informations relatives à l'identification de l'appelant qui s'affichent sur un téléphone. 
+affichées sur un téléphone. Il existe plusieurs outils d'usurpation d'identité qui peuvent être 
+être utilisés dans les attaques d'ingénierie sociale.
+Voici quelques exemples d'outils d'usurpation d'identité :
+
+- ```SpoofApp``` : Il s'agit d'une application Apple iOS et Android qui permet d'usurper facilement un numéro de téléphone.
+- ```SpoofCard``` : Il s'agit d'une application Apple iOS et Android qui permet d'usurper un numéro et de changer de voix, d'enregistrer des appels, de générer différents types d'appels, générer différents bruits de fond, et envoyer les appels directement à la messagerie vocale.
+- ```Asterisk``` : Asterisk est un outil légitime de gestion de la voix sur IP (VoIP) qui peut également être utilisé pour usurper l'identité de l'appelant.
