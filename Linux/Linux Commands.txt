@@ -632,17 +632,17 @@ Exemple : Assigner une adresse
 
 # sudo vi /etc/netplan/00-installer-config.yaml
 
-	network :
-		ethernets:
-			enp0s3 :
-				dhcp4 : fals
-				dhcp6 : false
-				addresses :
-					- 10.0.0.9/24
-					- aa:bb:cc:dd:aa:cc:dddd
-
-			version : 2
-
+network:
+  version: 2
+  ethernets:
+    ens33:
+      addresses:
+        - 192.168.1.100/24
+      gateway4: 192.168.1.1
+      nameservers:
+        addresses:
+          - 8.8.8.8
+          - 8.8.4.4
 
 # sudo netplan apply					--> pour enrégistrer
 
@@ -656,12 +656,13 @@ Exemple : Assigner une adresse
 network:
 		ethernets:
 			enp0s8:
-				dhcp4: fals
+				dhcp4: false
 				dhcp6: false
 				addresses:
 					- 10.0.0.9/24
 					- aa:bb:cc:dd:aa:cc:dddd
 				nameservers:
+				  addresses:
 					- 8.8.4.4
 					- 8.8.8.8
 				routes:

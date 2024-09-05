@@ -6,17 +6,17 @@ _______________________________________________
 Définition de quelques termes
 
 - SID (Security Identifier)
-	- Le SID  est un identifiant unique qui désigne un utilisateur, un groupe ou un domaine sur windows
-	- Il est composé de plusieurs parties dont le RID
-	- Format : S-1-5-21-3623811015-3361044348-30300820-500 dont le 500 représente le RID
+  - Le SID  est un identifiant unique qui désigne un utilisateur, un groupe ou un domaine sur windows
+  - Il est composé de plusieurs parties dont le RID
+  - Format : S-1-5-21-3623811015-3361044348-30300820-500 dont le 500 représente le RID
 
 - RID (Relative Identifier)
-	- C'est un composant du SID qui permet d'identifier un utilisateur ou des objets dans un domaine ou un système locale  
-	- 500 : Administrateur du domaine ou de l'ordinateur local (compte administrateur par défaut).
-	- 501 : Invité du domaine ou de l'ordinateur local (compte invité par défaut).
-	- 1000 et au-delà : Comptes d'utilisateurs créés sur le système.
-	- Lorsqu'un nouveau compte utilisateur ou groupe est créé sur un domaine ou un système, un nouveau RID est généré et ajouté au SID du compte
-	- Connaître le RID de comptes spécifiques (comme le RID 500 pour l'administrateur) peut être exploité pour cibler directement ces comptess.
+  - C'est un composant du SID qui permet d'identifier un utilisateur ou des objets dans un domaine ou un système locale  
+  - 500 : Administrateur du domaine ou de l'ordinateur local (compte administrateur par défaut).
+  - 501 : Invité du domaine ou de l'ordinateur local (compte invité par défaut).
+  - 1000 et au-delà : Comptes d'utilisateurs créés sur le système.
+  - Lorsqu'un nouveau compte utilisateur ou groupe est créé sur un domaine ou un système, un nouveau RID est généré et ajouté au SID du compte
+  - Connaître le RID de comptes spécifiques (comme le RID 500 pour l'administrateur) peut être exploité pour cibler directement ces comptess.
 
 ## Utilisation de Nmap pour déterminer les serveurs SMB
 
@@ -60,7 +60,7 @@ Nmap done: 256 IP addresses (2 hosts up) scanned in 4.74 seconds
 ```
 
 - Résultats :
-	- On remarque que le port 139 & 445 son ouverts sur l'hôte 172.17.0.2
+  - On remarque que le port 139 & 445 son ouverts sur l'hôte 172.17.0.2
 
 ### Scanne du sous réseau 10.6.6.0/24
 
@@ -127,7 +127,7 @@ Nmap done: 256 IP addresses (7 hosts up) scanned in 4.93 seconds
 ```
 
 - Résultats
-	- On constate que sur l'hôte 10.6.6.23 les ports 139 (NetBIOS) & 445 (SMB) sont ouverts. Ce qui fait de cet hôte une cible potentiel
+  - On constate que sur l'hôte 10.6.6.23 les ports 139 (NetBIOS) & 445 (SMB) sont ouverts. Ce qui fait de cet hôte une cible potentiel
 
 ## Utilisation de enum4linux pour l'énumération des utilisateurs et partages de fichiers
 
@@ -362,7 +362,7 @@ enum4linux complete on Tue Aug 20 16:41:51 2024
 
 - Résultats :
 
-	- Nous avons 5 fichier partagés dont 2 cachés
+  - Nous avons 5 fichier partagés dont 2 cachés
 
 #### Déterminons les politiques de mots de passe mise en place avec enum4linux -P
 
@@ -446,9 +446,9 @@ enum4linux complete on Tue Aug 20 16:49:30 2024
 ```
 
 - Résultats :
-	- Longueur minimal du password = 5
-	- Il n'existe pas d'account lockout
-	- Niveau de sécurité bas
+  - Longueur minimal du password = 5
+  - Il n'existe pas d'account lockout
+  - Niveau de sécurité bas
 
 #### Simple énumération sur la cible 10.6.6.23 avec enum4linux -a
 
@@ -658,10 +658,10 @@ enum4linux complete on Tue Aug 20 16:57:47 2024
 
 ```
 
-- Résultats : 
-	
-	- Nous constatons qu'il existe 3 utilisateurs et 7 groups
-	- Il existe 3 partages et IPC$ est un partages propice au serveur pour ses services
+- Résultats :
+ 
+  - Nous constatons qu'il existe 3 utilisateurs et 7 groups
+  - Il existe 3 partages et IPC$ est un partages propice au serveur pour ses services
 
 ## Utilisation de smbclient pour transférer les fichiers entre systèmes
 
@@ -675,6 +675,7 @@ enum4linux complete on Tue Aug 20 16:57:47 2024
 C'est un fichier Malveillant
 
 ```
+
 - listes des partages sur la cible
 
 ```bash
@@ -725,7 +726,7 @@ Putting file badfile.txt as badfile.txt (19.5 kb/s) (average 19.5 kb/s)
 
 ```
 
-- Vérification et quitter 
+- Vérification et quitter
 
 ```bash
 ┌──(root㉿Kali)-[/home/kali]
@@ -780,8 +781,3 @@ smb: \> dir
                 38497656 blocks of size 1024. 8588240 blocks available
 
 ```
-
-
-
-
-

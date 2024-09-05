@@ -1,0 +1,62 @@
+# Challenge de 30 Jours pour une expérience pratique avec MYDIFR
+
+Visitez la playlist du challenge [ici](https://www.youtube.com/watch?v=W3ExS2m6B24&list=PLG6KGSNK4PuBb0OjyDIdACZnb8AoNBeq6)
+
+## Jour 1
+
+- Mise en place du diagramme avec https://www.draw.io
+
+## Jour 2
+
+- Introduction à ELK Stack
+
+### C'est quoi ELK Stack et son avantage
+
+ELK est un acronyme pour un ensemble d'outils open-source utilisé principalement pour la gestion, la recherche et l'analyse des données log. Les trois composants principaux de la suite ELK sont :
+
+- ```Elasticsearch``` : Un moteur de recherche et d'analyse distribué basé sur Lucene. Il est conçu pour traiter et indexer de grandes quantités de données en temps réel, ce qui le rend idéal pour la recherche rapide et l'analyse de données. Il centralise le stockage de données et assure une recherche ultra-rapide.
+	- Il utilise le language ES|QL (Elasticsearch Piped Query Language)
+	- Il utilise aussi l'API RESTful et JSON 
+
+- ```Logstash``` : Un outil de collecte et de transformation de données. Logstash permet de centraliser les logs et les événements provenant de diverses sources, de les transformer selon les besoins (par exemple, en les filtrant ou en les enrichissant), puis de les envoyer vers Elasticsearch pour l'indexation.
+Pour collecter les Logs, il utilise les ```Beats``` ou les ```Agents Elastic```
+Nous avons 3 types de Beats
+	- ```File Beat``` : pour les Logs
+	- ```Metric Beat``` : pour les Métriques
+	- ```Packet Beat``` : pour les données réseau
+	- ```Winlog Beat``` : pour les évènements windows
+	- ```Audit Beat``` : pour l'audit des données
+	- ```Heartbeat Beat``` : pour monitorer le temps
+
+- ```Kibana``` : Une interface utilisateur pour visualiser et explorer les données stockées dans Elasticsearch. Kibana fournit des tableaux de bord, des graphiques, des cartes et d'autres outils de visualisation pour aider à l'analyse des données.
+
+Ensemble, ces outils forment une solution puissante pour la gestion des logs, la surveillance des systèmes et l'analyse des données en temps réel. On parle souvent de la stack ELK, et elle est largement utilisée dans les environnements de développement et de production pour la gestion des logs et la surveillance des applications.
+
+Consultez la documentation [ici](https://www.elastic.co/fr/elastic-stack/features)
+
+## Jour 3
+
+- Comment mettre en place une instance Elasticsearch (cf : manuel de déploiement)
+
+## Jour 4
+
+- Comment mettre en place une instance Kibana (cf : manuel de déploiement)
+
+## Jour 5
+
+- Installer windows Server avec RDP
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
